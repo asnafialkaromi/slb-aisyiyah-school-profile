@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: light --default;
+}
+@plugin "daisyui/theme" {
+  name: "schooldarkgreen";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+
+  --color-base-100: oklch(98% 0.002 247.839);
+  --color-base-200: oklch(95% 0.003 247.839); 
+  --color-base-300: oklch(90% 0.004 247.839);
+  --color-base-content: oklch(20% 0.03 247.839);
+
+  --color-primary: oklch(54.5% 0.16 144);
+  --color-primary-content: oklch(98% 0 0); 
+
+  --color-secondary: oklch(83% 0.1 92);
+  --color-secondary-content: oklch(25% 0.03 92);
+
+  --color-accent: oklch(88% 0.12 70);
+  --color-accent-content: oklch(25% 0.04 70);
+
+  --color-neutral: oklch(35% 0.02 240);
+  --color-neutral-content: oklch(98% 0 0);
+
+  --color-info: oklch(75% 0.15 230);
+  --color-info-content: oklch(28% 0.06 230);
+
+  --color-success: oklch(60% 0.16 144);
+  --color-success-content: oklch(98% 0 0);
+
+  --color-warning: oklch(75% 0.2 80);
+  --color-warning-content: oklch(30% 0.07 80);
+
+  --color-error: oklch(66% 0.22 20);
+  --color-error-content: oklch(98% 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+body, html {
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  scroll-behavior: smooth !important;
+  overflow-x: hidden;
+}
