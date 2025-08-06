@@ -88,11 +88,33 @@ function Announcement() {
       <h1 className="w-fit text-4xl font-semibold mx-auto text-accent-content mb-8">
         Pengumuman
       </h1>
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+
+      {/* Pengumuman */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
+        {loading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <CardSkeletonAnnoun key={index} />
+          ))}
+
+        {!loading && announcements.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">
+            Belum ada pengumuman.
+          </div>
+        )}
+      </div>
+
+      <AnnouncementList
+        announcements={announcements}
+        loading={loading}
+        onEdit={handleEdit}
+      />
+
+      {/* Semester */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-24">
         <h2 className="text-lg font-medium">
           Semester {semesterList[currentIndex] || "-"}
         </h2>
-        <p className="md:absolute mx-auto w-full max-w-7xl  text-sm text-gray-500 my-2 text-center -z-10">
+        <p className="md:absolute mx-auto w-full max-w-[1248px] text-sm text-gray-500 my-2 text-center -z-10">
           Halaman {currentIndex + 1} dari {semesterList.length}
         </p>
 
@@ -114,29 +136,6 @@ function Announcement() {
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
-        {loading &&
-          Array.from({ length: 3 }).map((_, index) => (
-            <CardSkeletonAnnoun key={index} />
-          ))}
-
-        {!loading && announcements.length === 0 && (
-          <div className="col-span-full text-center text-gray-500">
-            Belum ada pengumuman.
-          </div>
-        )}
-      </div>
-
-      <AnnouncementFormModal
-        onSuccess={handleSuccess}
-        selectedId={selectedId}
-      />
-
-      <AnnouncementList
-        announcements={announcements}
-        loading={loading}
-        onEdit={handleEdit}
-      />
       <Toast message={toast.message} type={toast.type} />
     </section>
   );

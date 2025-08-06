@@ -7,14 +7,14 @@ function Hero({ scrollToRef }) {
   };
 
   return (
-    <div className="hero bg-primary  min-h-screen pt-16">
-      <div className="hero-content flex-col lg:flex-row">
+    <div className="hero bg-primary min-h-screen pt-32 pb-16 px-4">
+      <div className="hero-content max-w-7xl p-0 flex-col lg:flex-row gap-12">
         <div className="text-center lg:text-left space-y-2">
           <h1 className="text-3xl font-bold text-white">
             Selamat Datang di Sekolah
           </h1>
-          <h2 className="text-5xl font-bold text-white">
-            SLB Aisyah Al Walidah
+          <h2 className="text-4xl lg:text-5xl font-bold text-white">
+            SLB Aisyiyah Al Walidah
           </h2>
           <p className="py-6 text-white">
             Kami menyediakan pendidikan berkualitas untuk masa depan yang lebih

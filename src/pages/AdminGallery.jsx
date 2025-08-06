@@ -5,6 +5,7 @@ import GalleryList from "../components/GalleryList";
 import GalleryService from "../api/services/galleryService";
 import Toast from "../components/Toast";
 import CardSkeletonGallery from "../components/skeleton/CardSkeletonGallery";
+import { LuPlus } from "react-icons/lu";
 
 function AdminGallery() {
   const [semesterList, setSemesterList] = useState([]);
@@ -84,21 +85,42 @@ function AdminGallery() {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Galeri</h1>
-        <label
-          htmlFor="modal_gallery"
-          className="btn btn-primary"
+      <div className="flex flex-col mb-6 gap-4 w-full">
+        <h1 className="text-2xl font-bold mx-auto sm:ml-0">Galeri</h1>
+        <button
+          className="btn btn-primary w-fit mx-auto sm:mr-0"
           onClick={() => {
             setSelectedId(null);
             document.getElementById("modal_gallery").showModal();
           }}
         >
-          Tambah Galeri
-        </label>
+          <LuPlus className="mr-2 text-lg font-bold" />
+          Tambah
+        </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+        {loading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <CardSkeletonGallery key={index} />
+          ))}
+
+        {!loading && galleries.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">
+            Belum ada galeri.
+          </div>
+        )}
+      </div>
+
+      <GalleryFormModal selectedId={selectedId} onSuccess={handleSuccess} />
+      <GalleryList
+        onEdit={handleEdit}
+        galleries={galleries}
+        loading={loading}
+      />
+
+      {/* Pagination */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-12">
         <h2 className="text-lg font-medium">
           Bulan {semesterList[currentIndex] || "-"}
         </h2>
@@ -124,25 +146,6 @@ function AdminGallery() {
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
-        {loading &&
-          Array.from({ length: 3 }).map((_, index) => (
-            <CardSkeletonGallery key={index} />
-          ))}
-
-        {!loading && galleries.length === 0 && (
-          <div className="col-span-full text-center text-gray-500">
-            Belum ada galeri.
-          </div>
-        )}
-      </div>
-
-      <GalleryFormModal selectedId={selectedId} onSuccess={handleSuccess} />
-      <GalleryList
-        onEdit={handleEdit}
-        galleries={galleries}
-        loading={loading}
-      />
       <Toast message={toast.message} type={toast.type} />
     </div>
   );

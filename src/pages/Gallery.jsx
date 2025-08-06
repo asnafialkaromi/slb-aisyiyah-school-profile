@@ -37,12 +37,10 @@ function Gallery() {
       if (res && res.status && res.data) {
         setGalleries(res.data);
       } else {
-        console.error("Gagal memuat galeri:", res);
         setToast({ message: "Gagal mengambil galeri.", type: "error" });
       }
     } catch (err) {
       setToast({ message: "Gagal mengambil galeri.", type: "error" });
-      console.error("Gagal memuat galeri:", err);
     } finally {
       setLoading(false);
     }
@@ -73,7 +71,24 @@ function Gallery() {
       <h1 className="w-full text-4xl font-semibold text-center text-accent-content mb-8">
         Galeri
       </h1>
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+
+      {/* Gallery */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+        {loading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <CardSkeletonGallery key={index} />
+          ))}
+
+        {!loading && galleries.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">
+            Belum ada galeri.
+          </div>
+        )}
+      </div>
+      <ImageGrid images={galleries} />
+
+      {/* Pagination */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-24">
         <h2 className="text-lg font-medium">
           Bulan {semesterList[currentIndex] || "-"}
         </h2>
@@ -99,19 +114,6 @@ function Gallery() {
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
-        {loading &&
-          Array.from({ length: 3 }).map((_, index) => (
-            <CardSkeletonGallery key={index} />
-          ))}
-
-        {!loading && galleries.length === 0 && (
-          <div className="col-span-full text-center text-gray-500">
-            Belum ada galeri.
-          </div>
-        )}
-      </div>
-      <ImageGrid images={galleries} />
       <Toast message={toast.message} type={toast.type} />
     </section>
   );

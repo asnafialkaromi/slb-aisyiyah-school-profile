@@ -26,7 +26,6 @@ function AdminDashboard() {
         limit: 2,
       });
       setAnnouncements(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -41,7 +40,6 @@ function AdminDashboard() {
         limit: 2,
       });
       setDocumentation(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -56,7 +54,6 @@ function AdminDashboard() {
         limit: 2,
       });
       setReports(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     } finally {

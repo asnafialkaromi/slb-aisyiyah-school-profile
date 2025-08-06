@@ -4,6 +4,8 @@ import ReportFormModal from "../components/ReportFormModal";
 import ReportList from "../components/ReportList";
 import ReportService from "../api/services/reportService";
 import CardSkeletonAnnoun from "../components/skeleton/CardSkeletonAnnoun";
+import { LuPlus } from "react-icons/lu";
+import Toast from "../components/Toast";
 
 function AdminReport() {
   const [semesterList, setSemesterList] = useState([]);
@@ -74,28 +76,48 @@ function AdminReport() {
 
   useEffect(() => {
     fetchSemesters();
+    setTimeout(() => setToast({ message: "", type: "success" }), 3000);
   }, []);
 
   useEffect(() => {
     fetchReports();
+    setTimeout(() => setToast({ message: "", type: "success" }), 3000);
   }, [semesterList, currentIndex, refreshKey]);
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Laporan</h1>
+      <div className="flex flex-col mb-6 gap-4 w-full">
+        <h1 className="text-2xl font-bold mx-auto sm:ml-0">Laporan</h1>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary w-fit mx-auto sm:mr-0"
           onClick={() => {
             setSelectedId(null);
             document.getElementById("modal_report").showModal();
           }}
         >
-          Tambah Laporan
+          <LuPlus className="mr-2 text-lg font-bold" />
+          Tambah
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+        {loading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <CardSkeletonAnnoun key={index} />
+          ))}
+
+        {!loading && reports.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">
+            Belum ada galeri.
+          </div>
+        )}
+      </div>
+
+      <ReportFormModal selectedId={selectedId} onSuccess={handleSuccess} />
+      <ReportList onEdit={handleEdit} reports={reports} loading={loading} />
+
+      {/* Pagination */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-12">
         <h2 className="text-lg font-medium">
           Tahun {semesterList[currentIndex] || "-"}
         </h2>
@@ -120,22 +142,7 @@ function AdminReport() {
           </button>
         </div>
       </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
-        {loading &&
-          Array.from({ length: 3 }).map((_, index) => (
-            <CardSkeletonAnnoun key={index} />
-          ))}
-
-        {!loading && reports.length === 0 && (
-          <div className="col-span-full text-center text-gray-500">
-            Belum ada galeri.
-          </div>
-        )}
-      </div>
-
-      <ReportFormModal selectedId={selectedId} onSuccess={handleSuccess} />
-      <ReportList onEdit={handleEdit} reports={reports} loading={loading} />
+      <Toast type={toast.type} message={toast.message} />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import AnnouncementDetail from "./pages/AnnouncementDetail";
 import ReportDetail from "./pages/ReportDetail";
 import Contacts from "./pages/Contacts";
 import AdminDashboard from "./pages/AdminDashboard";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       {/* Public / visitor layout */}
       <Route element={<VisitorLayout />}>
         <Route index element={<Home />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="pengumuman" element={<Announcement />} />
         <Route path="galeri" element={<Gallery />} />
@@ -33,6 +34,7 @@ function App() {
       {/* Admin layout routes */}
       <Route path="/admin/*" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="pengumuman" element={<AdminAnnouncement />} />
         <Route path="galeri" element={<AdminGallery />} />
@@ -41,7 +43,7 @@ function App() {
 
       {/* Login route */}
       <Route path="/login" element={<Login />} />
-      <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
