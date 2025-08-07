@@ -57,16 +57,16 @@ const VisionMission = forwardRef((props, ref) => {
         </h2>
 
         {/* Visi */}
-        <div className="flex flex-col lg:flex-row items-center gap-20 text-center mb-40">
+        <div className="flex flex-col lg:flex-row max-w-7xl items-center justify-between gap-28 lg:gap-0 text-center mb-40">
           <img
             src={Gallery4}
             alt="Visi"
-            className="w-md h-auto mx-auto rounded-xl drop-shadow-2xl"
+            className="aspect-video object-cover lg:w-[45%] h-auto rounded-xl drop-shadow-2xl"
             data-aos="fade-right"
           />
           <div
             data-aos="fade-left"
-            className="flex flex-col items-center text-center mb-16"
+            className="flex flex-col w-full lg:w-1/2 items-center text-center mb-16"
           >
             <div className="flex items-center justify-center mb-4">
               {vision.icon}
@@ -74,7 +74,7 @@ const VisionMission = forwardRef((props, ref) => {
                 {vision.title}
               </h3>
             </div>
-            <p className="max-w-xl text-xl">{vision.text}</p>
+            <p className="max-w-xl w-full text-xl">{vision.text}</p>
           </div>
         </div>
 

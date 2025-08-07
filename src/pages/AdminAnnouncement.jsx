@@ -5,12 +5,12 @@ import AnnouncementFormModal from "../components/AnnouncementFormModal";
 import AnnouncementService from "../api/services/announcementService";
 import Toast from "../components/Toast";
 import CardSkeletonAnnoun from "../components/skeleton/CardSkeletonAnnoun";
+import { LuPlus } from "react-icons/lu";
 
 function AdminAnnouncement() {
   const [semesterList, setSemesterList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedId, setSelectedId] = useState(null);
-  const [refresh, setRefresh] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
@@ -33,6 +33,7 @@ function AdminAnnouncement() {
     if (!semesterList.length) return;
     try {
       setLoading(true);
+      setAnnouncements([]);
       const res = await AnnouncementService.getAllAnnouncements({
         semester: "" + semesterList[currentIndex] + "", //"" + params + "",
       });
@@ -58,16 +59,16 @@ function AdminAnnouncement() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, [semesterList, currentIndex, refresh]);
+  }, [semesterList, currentIndex]);
 
   const handleEdit = useCallback((id) => {
     setSelectedId(id);
     document.getElementById("modal_announcement").showModal();
   }, []);
 
-  const handleSuccess = useCallback(() => {
+  const handleSuccess = useCallback(async () => {
     setSelectedId(null);
-    setRefresh((prev) => !prev);
+    await fetchSemesters();
     document.getElementById("modal_announcement").close();
   }, []);
 
@@ -85,44 +86,19 @@ function AdminAnnouncement() {
 
   return (
     <>
-      <div className="p-4 h-fit">
-        <div className="flex flex-col mb-8 h-full sm:flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold mb-4">Pengumuman</h1>
+      <div className="p-4">
+        <div className="flex flex-col mb-8 gap-4 w-full">
+          <h1 className="text-2xl font-bold mx-auto sm:ml-0">Pengumuman</h1>
           <button
+            className="btn btn-primary mx-auto sm:mr-0"
             onClick={() => {
               setSelectedId(null);
               document.getElementById("modal_announcement").showModal();
             }}
-            className="btn btn-primary"
           >
-            Tambah Pengumuman
+            <LuPlus className="mr-2 text-lg font-bold" />
+            Tambah
           </button>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
-          <h2 className="text-lg font-medium">
-            Semester {semesterList[currentIndex] || "-"}
-          </h2>
-          <p className="text-sm text-gray-500 my-2 text-center">
-            Halaman {currentIndex + 1} dari {semesterList.length}
-          </p>
-
-          <div className="join grid grid-cols-2">
-            <button
-              className="join-item btn btn-primary btn-outline"
-              onClick={goToPrevious}
-              disabled={currentIndex >= semesterList.length - 1}
-            >
-              Sebelumnya
-            </button>
-            <button
-              className="join-item btn btn-primary btn-outline"
-              onClick={goToNext}
-              disabled={currentIndex <= 0}
-            >
-              Selanjutnya
-            </button>
-          </div>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
@@ -148,6 +124,33 @@ function AdminAnnouncement() {
           loading={loading}
           onEdit={handleEdit}
         />
+
+        {/* Pagination */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-12">
+          <h2 className="text-lg font-medium">
+            Semester {semesterList[currentIndex] || "-"}
+          </h2>
+          <p className="text-sm text-gray-500 my-2 text-center">
+            Halaman {currentIndex + 1} dari {semesterList.length}
+          </p>
+
+          <div className="join grid grid-cols-2">
+            <button
+              className="join-item btn btn-primary btn-outline"
+              onClick={goToPrevious}
+              disabled={currentIndex >= semesterList.length - 1}
+            >
+              Sebelumnya
+            </button>
+            <button
+              className="join-item btn btn-primary btn-outline"
+              onClick={goToNext}
+              disabled={currentIndex <= 0}
+            >
+              Selanjutnya
+            </button>
+          </div>
+        </div>
 
         <Toast message={toast.message} type={toast.type} />
       </div>

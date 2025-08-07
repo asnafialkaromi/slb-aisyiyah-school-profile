@@ -10,7 +10,7 @@ const AnnouncementList = ({ announcements, onEdit }) => {
 
   return (
     <>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
         {announcements?.map((data, index) => (
           <div
             data-aos="fade-up"

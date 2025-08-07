@@ -11,24 +11,26 @@ function Contacts() {
       </h1>
       <div className="flex flex-col md:flex-row gap-4 w-full items-center justify-center">
         {/* Informasi Kontak */}
-        <div className="flex flex-col items-center justify-center p-8 h-[500px] bg-white shadow-xl w-full md:w-1/2 rounded-lg">
-          <h2 className="text-3xl font-bold text-primary mb-4">Kontak Kami</h2>
-          <div className="flex flex-col items-center w-full gap-2">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
-              <img src={MailBox} alt="Mailbox" className="w-8 md:w-12" />
+        <div className="flex flex-col items-center justify-center p-4 h-[500px] bg-white shadow-xl w-full md:w-1/2 rounded-lg">
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-4">
+            Kontak Kami
+          </h2>
+          <div className="flex flex-col items-start gap-2">
+            <div className="flex flex-row items-center justify-center gap-2 md:gap-6">
+              <img src={MailBox} alt="Mailbox" className="w-6 md:w-8" />
               <p className="text-md font-medium text-base-content">
                 Kode Pos : 53163
               </p>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
-              <img src={Whatsapp} alt="Mailbox" className="w-8 md:w-12" />
+            <div className="flex flex-row items-center justify-center gap-2 md:gap-6">
+              <img src={Whatsapp} alt="Mailbox" className="w-6 md:w-8" />
               <p className="text-md font-medium text-base-content">
                 081327275713 - 087876017909
               </p>
             </div>
-            <div className="flex flex-col md:flex-row w-full items-center justify-center gap-2 md:gap-6">
-              <img src={Gmail} alt="Mailbox" className="w-8 md:w-12" />
-              <p className="text-md font-medium text-base-content">
+            <div className="flex flex-row items-center justify-center gap-2 md:gap-6">
+              <img src={Gmail} alt="Mailbox" className="w-6 md:w-8" />
+              <p className="text-md font-medium text-base-content [word-break:break-all]">
                 slbaisyiyahalwalidahajibarang@gmail.com
               </p>
             </div>
