@@ -112,98 +112,109 @@ const AnnouncementFormModal = ({ onSuccess, selectedId }) => {
 
   return (
     <>
-      <dialog id="modal_announcement" className="modal p-4">
+      <dialog id="modal_announcement" className="modal">
         <div className="modal-box w-full max-w-2xl relative">
-          <h3 className="font-bold text-lg mb-4">
-            {selectedId ? "Edit Pengumuman" : "Tambah Pengumuman"}
-          </h3>
-          <form method="dialog">
-            <button
-              onClick={() =>
-                document.getElementById("modal_announcement").close()
-              }
-              className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
-            >
-              ✕
-            </button>
-          </form>
-
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="flex flex-col space-y-3"
-          >
-            <label>Judul</label>
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-              required
-            />
-
-            <label>Deskripsi</label>
-            <textarea
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              className="textarea textarea-bordered w-full min-h-40"
-              required
-            ></textarea>
-
-            <label>Gambar</label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-              className="file-input file-input-bordered w-full"
-              {...(!selectedId && { required: true })}
-            />
-
-            {previewImage && (
-              <div className="mt-2">
-                <label className="text-md mb-4 block">Preview Gambar:</label>
-                <img
-                  src={previewImage}
-                  alt="Preview"
-                  className="max-h-48 rounded"
-                />
-              </div>
-            )}
-
-            <div className="modal-action justify-between">
-              <div className="flex gap-2">
+          {loading ? (
+            <div className="flex flex-col h-[80vh] items-center justify-center z-10">
+              <div className="loading loading-spinner loading-xl text-primary" />
+              <p className="text-lg">Loading...</p>
+            </div>
+          ) : (
+            <div>
+              <h3 className="font-bold text-lg mb-4">
+                {selectedId ? "Edit Pengumuman" : "Tambah Pengumuman"}
+              </h3>
+              <form method="dialog">
                 <button
-                  type="submit"
-                  className="btn btn-success"
-                  disabled={loading}
+                  onClick={() =>
+                    document.getElementById("modal_announcement").close()
+                  }
+                  className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
                 >
-                  {selectedId ? "Perbarui" : "Simpan"}
+                  ✕
                 </button>
-                {selectedId && (
+              </form>
+
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="flex flex-col space-y-3"
+              >
+                <label>Judul</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={form.title}
+                  onChange={handleChange}
+                  className="input input-bordered w-full"
+                  required
+                />
+
+                <label>Deskripsi</label>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  className="textarea textarea-bordered w-full min-h-40"
+                  required
+                ></textarea>
+
+                <label>Gambar</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="file-input file-input-bordered w-full"
+                  {...(!selectedId && { required: true })}
+                />
+
+                {previewImage && (
+                  <div className="mt-2">
+                    <label className="text-md mb-4 block">
+                      Preview Gambar:
+                    </label>
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="max-h-48 rounded"
+                    />
+                  </div>
+                )}
+
+                <div className="modal-action justify-between">
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      disabled={loading}
+                    >
+                      {selectedId ? "Perbarui" : "Simpan"}
+                    </button>
+                    {selectedId && (
+                      <button
+                        type="button"
+                        onClick={handleDelete}
+                        className="btn btn-error"
+                        disabled={loading}
+                      >
+                        Hapus
+                      </button>
+                    )}
+                  </div>
                   <button
                     type="button"
-                    onClick={handleDelete}
-                    className="btn btn-error"
-                    disabled={loading}
+                    onClick={() =>
+                      document.getElementById("modal_announcement").close()
+                    }
+                    className="btn"
                   >
-                    Hapus
+                    Batal
                   </button>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() =>
-                  document.getElementById("modal_announcement").close()
-                }
-                className="btn"
-              >
-                Batal
-              </button>
+                </div>
+              </form>
             </div>
-          </form>
+          )}
         </div>
         <Toast type={toast.type} message={toast.message} />
       </dialog>

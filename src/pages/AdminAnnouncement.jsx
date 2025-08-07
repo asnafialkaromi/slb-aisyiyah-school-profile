@@ -11,7 +11,6 @@ function AdminAnnouncement() {
   const [semesterList, setSemesterList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedId, setSelectedId] = useState(null);
-  const [refresh, setRefresh] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "success" });
@@ -34,6 +33,7 @@ function AdminAnnouncement() {
     if (!semesterList.length) return;
     try {
       setLoading(true);
+      setAnnouncements([]);
       const res = await AnnouncementService.getAllAnnouncements({
         semester: "" + semesterList[currentIndex] + "", //"" + params + "",
       });
@@ -59,16 +59,16 @@ function AdminAnnouncement() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, [semesterList, currentIndex, refresh]);
+  }, [semesterList, currentIndex]);
 
   const handleEdit = useCallback((id) => {
     setSelectedId(id);
     document.getElementById("modal_announcement").showModal();
   }, []);
 
-  const handleSuccess = useCallback(() => {
+  const handleSuccess = useCallback(async () => {
     setSelectedId(null);
-    setRefresh((prev) => !prev);
+    await fetchSemesters();
     document.getElementById("modal_announcement").close();
   }, []);
 

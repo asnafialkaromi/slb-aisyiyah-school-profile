@@ -10,7 +10,6 @@ import { LuPlus } from "react-icons/lu";
 function AdminGallery() {
   const [semesterList, setSemesterList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [refresh, setRefresh] = useState(0);
   const [selectedId, setSelectedId] = useState(null);
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +34,7 @@ function AdminGallery() {
     if (!semesterList.length) return;
     try {
       setLoading(true);
+      setGalleries([]);
       const res = await GalleryService.getAllGallery({
         semester: "" + semesterList[currentIndex] + "",
       });
@@ -69,9 +69,9 @@ function AdminGallery() {
     document.getElementById("modal_gallery").showModal();
   }, []);
 
-  const handleSuccess = useCallback(() => {
+  const handleSuccess = useCallback(async () => {
     setSelectedId(null);
-    setRefresh((prev) => !prev);
+    await fetchSemesters();
     document.getElementById("modal_gallery").close();
   }, []);
 
@@ -81,7 +81,7 @@ function AdminGallery() {
 
   useEffect(() => {
     fetchGalleries();
-  }, [semesterList, currentIndex, refresh]);
+  }, [semesterList, currentIndex]);
 
   return (
     <div className="p-4">
@@ -99,7 +99,7 @@ function AdminGallery() {
         </button>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading &&
           Array.from({ length: 3 }).map((_, index) => (
             <CardSkeletonGallery key={index} />

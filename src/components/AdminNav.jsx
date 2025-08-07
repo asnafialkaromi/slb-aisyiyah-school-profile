@@ -15,26 +15,19 @@ const AdminNav = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+  const getUserName = async () => {
+    try {
+      const res = await AuthService.getUser();
+      if (res.status === true && res.data) {
+        setUserName(res.data.user.name);
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Auth error:", error);
       navigate("/login");
     }
-  }, []);
-
-  // const getUserName = async () => {
-  //   try {
-  //     const res = await AuthService.getUser();
-  //     if (res.status === 200) {
-  //       setUserName(res.data.name);
-  //     } else {
-  //       navigate("/login");
-  //     }
-  //   } catch (error) {
-  //     console.error("Auth error:", error);
-  //     navigate("/login");
-  //   }
-  // };
+  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -45,9 +38,9 @@ const AdminNav = ({ children }) => {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   getUserName();
-  // }, []);
+  useEffect(() => {
+    getUserName();
+  }, []);
 
   return (
     <>
@@ -112,14 +105,14 @@ const AdminNav = ({ children }) => {
 
         {/* Main Content */}
         <div className=" lg:ml-64 mt-16">
-          <nav className="fixed w-full top-0 bg-white text-primary p-4 flex items-center shadow-md z-40">
+          <nav className="fixed w-full top-0 bg-white text-primary py-4 px-10 flex items-center shadow-md z-40">
             <button
-              className="lg:hidden btn btn-sm btn-ghost text-black mr-4"
+              className="lg:hidden btn btn-sm btn-ghost text-black p-0 mr-4"
               onClick={toggleSidebar}
             >
               <LuMenu className="w-6 h-6" />
             </button>
-            <h3 className="text-lg font-semibold">Welcome, Admin {userName}</h3>
+            <h3 className="text-lg font-semibold">Welcome, {userName}</h3>
           </nav>
           {/* Page Content */}
           <main className="p-6 z-10">{children}</main>

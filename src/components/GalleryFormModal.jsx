@@ -38,24 +38,17 @@ function GalleryFormModal({ selectedId, onSuccess }) {
     setLoading(true);
     if (selectedId) {
       try {
-        console.log(selectedId);
         const res = await GalleryService.getGalleryById(selectedId);
-
-        const isoDate = res.data.date;
-        const formattedDate = isoDate
-          ? new Date(isoDate).toISOString().split("T")[0]
-          : "";
 
         setForm({
           title: res.data.title || "",
           description: res.data.description || "",
-          date: formattedDate || "",
+          date: res.data.date || "",
           image: null,
         });
-        console.log(res);
         setPreviewImage(res.data.imageUrl || null);
       } catch (err) {
-        console.error("Gagal mengambil data galeri:", err);
+        setToast({ message: "Gagal mengambil data galeri.", type: "error" });
       } finally {
         setLoading(false);
       }
@@ -75,6 +68,8 @@ function GalleryFormModal({ selectedId, onSuccess }) {
     formData.append("date", form.date);
     if (form.image) formData.append("image", form.image);
 
+    console.log(form.date);
+
     try {
       if (selectedId) {
         await GalleryService.updateGallery(selectedId, formData);
@@ -87,11 +82,9 @@ function GalleryFormModal({ selectedId, onSuccess }) {
       onSuccess();
     } catch (err) {
       console.error("Gagal menyimpan:", err);
-      setToast({ message: "Gagal menyimpan galeri.", type: "error" });
+      setToast({ message: "Gagal menyimpan galeri " + { err }, type: "error" });
     } finally {
       setLoading(false);
-      setForm({ title: "", description: "", date: "", image: null });
-      setPreviewImage(null);
     }
 
     setTimeout(() => setToast({ message: "", type: "success" }), 3000);
@@ -118,103 +111,117 @@ function GalleryFormModal({ selectedId, onSuccess }) {
     <>
       <dialog id="modal_gallery" className="modal">
         <div className="modal-box max-w-2xl">
-          <h3 className="font-bold text-lg mb-4">
-            {selectedId ? "Edit Galeri" : "Tambah Galeri"}
-          </h3>
-          <form method="dialog">
-            <button
-              onClick={() => document.getElementById("modal_gallery").close()}
-              className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
-            >
-              ✕
-            </button>
-          </form>
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="space-y-3"
-          >
-            <label>Judul</label>
-            <input
-              type="text"
-              name="title"
-              className="input input-bordered w-full"
-              value={form.title}
-              onChange={handleChange}
-              required
-            />
-
-            <label>Deskripsi</label>
-            <textarea
-              name="description"
-              className="textarea textarea-bordered w-full min-h-40"
-              value={form.description}
-              onChange={handleChange}
-              required
-            />
-
-            <label>Tanggal</label>
-            <input
-              type="date"
-              name="date"
-              className="input input-bordered w-full"
-              value={form.date}
-              onChange={handleChange}
-              required
-            />
-
-            <label>Foto</label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-              className="file-input file-input-bordered w-full"
-              {...(!selectedId && { required: true })}
-            />
-
-            {previewImage && (
-              <div>
-                <label className="text-sm text-gray-500 mb-1 block">
-                  Preview Gambar:
-                </label>
-                <img
-                  src={previewImage}
-                  alt="Preview"
-                  className="rounded max-h-48 border"
-                />
-              </div>
-            )}
-
-            <div className="modal-action justify-between">
-              <div className="flex gap-2">
+          {loading ? (
+            <div className="flex flex-col h-[80vh] items-center justify-center z-10">
+              <div className="loading loading-spinner loading-xl text-primary" />
+              <p className="text-lg">Loading...</p>
+            </div>
+          ) : (
+            <div>
+              <h3 className="font-bold text-lg mb-4">
+                {selectedId ? "Edit Galeri" : "Tambah Galeri"}
+              </h3>
+              <form method="dialog">
                 <button
-                  type="submit"
-                  className="btn btn-success"
-                  disabled={loading}
+                  onClick={() =>
+                    document.getElementById("modal_gallery").close()
+                  }
+                  className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4"
                 >
-                  {selectedId ? "Perbarui" : "Simpan"}
+                  ✕
                 </button>
-                {selectedId && (
+              </form>
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="space-y-3"
+              >
+                <label>Judul</label>
+                <input
+                  type="text"
+                  name="title"
+                  className="input input-bordered w-full"
+                  value={form.title}
+                  onChange={handleChange}
+                  required
+                />
+
+                <label>Deskripsi</label>
+                <textarea
+                  name="description"
+                  className="textarea textarea-bordered w-full min-h-40"
+                  value={form.description}
+                  onChange={handleChange}
+                  required
+                />
+
+                <label>Tanggal</label>
+                <input
+                  type="date"
+                  name="date"
+                  className="input input-bordered w-full"
+                  value={form.date}
+                  onChange={handleChange}
+                  required
+                />
+
+                <label>Foto</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="file-input file-input-bordered w-full"
+                  required
+                  // {...(!selectedId && { required: true })}
+                />
+
+                {previewImage && (
+                  <div>
+                    <label className="text-sm text-gray-500 mb-1 block">
+                      Preview Gambar:
+                    </label>
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="rounded max-h-48 border"
+                    />
+                  </div>
+                )}
+
+                <div className="modal-action justify-between">
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      disabled={loading}
+                    >
+                      {selectedId ? "Perbarui" : "Simpan"}
+                    </button>
+                    {selectedId && (
+                      <button
+                        type="button"
+                        onClick={handleDelete}
+                        className="btn btn-error"
+                        disabled={loading}
+                      >
+                        Hapus
+                      </button>
+                    )}
+                  </div>
                   <button
                     type="button"
-                    onClick={handleDelete}
-                    className="btn btn-error"
-                    disabled={loading}
+                    className="btn"
+                    onClick={() =>
+                      document.getElementById("modal_gallery").close()
+                    }
                   >
-                    Hapus
+                    Batal
                   </button>
-                )}
-              </div>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => document.getElementById("modal_gallery").close()}
-              >
-                Batal
-              </button>
+                </div>
+              </form>
             </div>
-          </form>
+          )}
         </div>
         <Toast message={toast.message} type={toast.type} />
       </dialog>

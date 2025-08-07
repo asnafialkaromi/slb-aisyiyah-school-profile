@@ -10,7 +10,6 @@ import Toast from "../components/Toast";
 function AdminReport() {
   const [semesterList, setSemesterList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [selectedId, setSelectedId] = useState(null);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +34,7 @@ function AdminReport() {
     if (!semesterList.length) return;
     try {
       setLoading(true);
+      setReports([]);
       const res = await ReportService.getAllReports({
         semester: "" + semesterList[currentIndex] + "",
       });
@@ -68,9 +68,9 @@ function AdminReport() {
     document.getElementById("modal_report").showModal();
   }, []);
 
-  const handleSuccess = useCallback(() => {
+  const handleSuccess = useCallback(async () => {
     setSelectedId(null);
-    setRefreshKey((prev) => prev + 1);
+    fetchSemesters();
     document.getElementById("modal_report").close();
   }, []);
 
@@ -82,7 +82,7 @@ function AdminReport() {
   useEffect(() => {
     fetchReports();
     setTimeout(() => setToast({ message: "", type: "success" }), 3000);
-  }, [semesterList, currentIndex, refreshKey]);
+  }, [semesterList, currentIndex]);
 
   return (
     <div className="p-4">
@@ -100,7 +100,7 @@ function AdminReport() {
         </button>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading &&
           Array.from({ length: 3 }).map((_, index) => (
             <CardSkeletonAnnoun key={index} />

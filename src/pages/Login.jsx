@@ -33,7 +33,7 @@ export default function Login() {
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         {error && (
-          <div role="alert" class="alert alert-error alert-soft">
+          <div role="alert" className="alert alert-error alert-soft">
             <span>{error}</span>
           </div>
         )}
