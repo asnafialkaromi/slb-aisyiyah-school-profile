@@ -26,13 +26,18 @@ function Footer() {
         </nav>
         <aside className="flex flex-col md:flex-row w-full md:w-2/3 items-center text-center md:text-left h-full gap-8">
           <img src={logo} alt="logo SLB Aisyah Al Walidah" className="w-24" />
-          <p className="text-lg font-semibold">
-            SLB Aisyiyah Al Walidah
-            <br />
-            <span className="text-sm font-normal">
-              Desa Banjarsari Rt 01 Rw 07 Kec. Ajibarang Kab. Banyumas{" "}
-            </span>
-          </p>
+          <div>
+            <p className="text-lg font-semibold">SLB Aisyiyah Al Walidah</p>
+            <p className="text-sm font-normal">
+              Desa Banjarsari Rt 01 Rw 07 Kec. Ajibarang Kab. Banyumas
+            </p>
+            <p className="text-sm font-normal">
+              Copyright &copy; 2025 by SLB Aisyiyah Al Walidah{" "}
+            </p>
+            <p className="text-sm font-normal text-gray-400">
+              Developed by Najmul Azka & M. Asnafi Alka.
+            </p>
+          </div>
         </aside>
       </div>
     </footer>
