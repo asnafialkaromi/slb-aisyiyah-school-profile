@@ -84,7 +84,7 @@ function Announcement() {
   };
 
   return (
-    <section className="max-w-7xl pt-32 pb-16 px-4 min-h-screen mx-auto">
+    <section className="max-w-7xl pt-32 pb-16 px-4 sm:px-0 min-h-screen mx-auto">
       <h1 className="w-fit text-4xl font-semibold mx-auto text-accent-content mb-8">
         Pengumuman
       </h1>

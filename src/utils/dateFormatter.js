@@ -20,3 +20,17 @@ export function formatDateToIndo(dateString) {
     date.toLocaleDateString("id-ID", options)
   );
 }
+
+export function formatDateToIndoSimple(dateString) {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+
+  const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  return date.toLocaleDateString("id-ID", options);
+}

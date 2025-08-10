@@ -67,13 +67,14 @@ function Gallery() {
   }, [semesterList, currentIndex]);
 
   return (
-    <section className="max-w-7xl pt-32 pb-16 px-4 min-h-screen mx-auto">
+    <section className="max-w-7xl pt-32 pb-16 px-4 sm:px-0 min-h-screen mx-auto">
       <h1 className="w-full text-4xl font-semibold text-center text-accent-content mb-8">
         Galeri
       </h1>
 
       {/* Gallery */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+        <h2></h2>
         {loading &&
           Array.from({ length: 3 }).map((_, index) => (
             <CardSkeletonGallery key={index} />
