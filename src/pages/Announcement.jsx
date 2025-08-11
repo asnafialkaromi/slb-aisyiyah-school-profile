@@ -112,7 +112,7 @@ function Announcement() {
       {/* Semester */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-24">
         <h2 className="text-lg font-medium">
-          Semester {semesterList[currentIndex] || "-"}
+           {semesterList[currentIndex] || "-"}
         </h2>
         <p className="md:absolute mx-auto w-full max-w-[1248px] text-sm text-gray-500 my-2 text-center -z-10">
           Halaman {currentIndex + 1} dari {semesterList.length}

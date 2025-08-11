@@ -5,6 +5,7 @@ import VisionMission from "../components/VisionMission";
 import GoogleMapEmbed from "../components/GoogleMapEmbed";
 import LatestAnnouncement from "../components/LatestAnnouncement";
 import PhotosView from "../components/PhotosView";
+import Class from "../components/Class";
 
 export default function Home() {
   const visionMissionRef = useRef(null);
@@ -13,6 +14,7 @@ export default function Home() {
     <div className="">
       <Hero scrollToRef={visionMissionRef} />
       <VisionMission ref={visionMissionRef} />
+      <Class ref={visionMissionRef} />
       <LatestAnnouncement />
       <PhotosView />
       <GoogleMapEmbed />
