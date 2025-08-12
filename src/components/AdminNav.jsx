@@ -7,6 +7,7 @@ import {
   LuMegaphone,
   LuImages,
   LuFileText,
+  LuSchool,
 } from "react-icons/lu";
 import AuthService from "../api/services/AuthService";
 
@@ -86,6 +87,11 @@ const AdminNav = ({ children }) => {
             <li>
               <Link to="/admin/laporan" className="flex items-center gap-2">
                 <LuFileText /> Laporan
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/kelas" className="flex items-center gap-2">
+                <LuSchool /> Kelas
               </Link>
             </li>
           </ul>

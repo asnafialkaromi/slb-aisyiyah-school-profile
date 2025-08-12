@@ -14,7 +14,7 @@ export default function Home() {
     <div className="">
       <Hero scrollToRef={visionMissionRef} />
       <VisionMission ref={visionMissionRef} />
-      <Class ref={visionMissionRef} />
+      <Class />
       <LatestAnnouncement />
       <PhotosView />
       <GoogleMapEmbed />

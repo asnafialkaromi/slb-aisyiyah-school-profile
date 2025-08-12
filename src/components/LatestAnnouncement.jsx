@@ -64,22 +64,26 @@ function LatestAnnouncement() {
           Pengumuman terbaru
         </h2>
 
-        {loading && (
+        {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <CardSkeletonAnnoun />
             <CardSkeletonAnnoun />
             <CardSkeletonAnnoun />
           </div>
+        ) : announcements.length === 0 ? (
+          <div className="text-center w-full py-8 text-gray-500">
+            Tidak ada pengumuman yang tersedia.
+          </div>
+        ) : (
+          <div className="flex flex-col md:flex-row gap-8 items-center mx-auto">
+            <AnnouncementList
+              announcements={announcements.slice(0, 3)}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+              semesterList={semesterList}
+            />
+          </div>
         )}
-
-        <div className="flex flex-col md:flex-row gap-8 items-center mx-auto">
-          <AnnouncementList
-            announcements={announcements.slice(0, 3)}
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-            semesterList={semesterList}
-          />
-        </div>
       </div>
     </section>
   );

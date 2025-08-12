@@ -1,12 +1,16 @@
-import apiClient from '../clients/apiClient';
+import apiClient from "../clients/apiClient";
 
 const ClassService = {
   getAllClass: async () => {
-    const response = await apiClient.get('/class');
+    const response = await apiClient.get("/class");
+    return response.data;
+  },
+  getClassById: async (id) => {
+    const response = await apiClient.get(`/class/${id}`);
     return response.data;
   },
   createClass: async (data) => {
-    const response = await apiClient.post('/class', data);
+    const response = await apiClient.post("/class", data);
     return response.data;
   },
   updateClass: async (id, data) => {

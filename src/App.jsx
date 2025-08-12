@@ -14,6 +14,7 @@ import ReportDetail from "./pages/ReportDetail";
 import Contacts from "./pages/Contacts";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./components/NotFound";
+import AdminClass from "./pages/AdminClass";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="pengumuman" element={<AdminAnnouncement />} />
         <Route path="galeri" element={<AdminGallery />} />
         <Route path="laporan" element={<AdminReport />} />
+        <Route path="kelas" element={<AdminClass />} />
       </Route>
 
       {/* Login route */}

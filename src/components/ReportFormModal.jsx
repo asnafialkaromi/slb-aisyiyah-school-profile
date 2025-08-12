@@ -108,7 +108,7 @@ function ReportFormModal({ selectedId, onSuccess }) {
 
   return (
     <>
-      <dialog id="modal_report" className="modal">
+      <dialog id="modal_report" className="modal px-4">
         <div className="modal-box max-w-4xl">
           {loading ? (
             <div className="flex flex-col h-[80vh] items-center justify-center z-10">
