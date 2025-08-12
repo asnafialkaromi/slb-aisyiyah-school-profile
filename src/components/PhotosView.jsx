@@ -39,22 +39,37 @@ function PhotosView() {
       <h1 className="text-4xl font-bold mb-8">Galeri</h1>
 
       <div className="columns-1 sm:columns-2 md:columns-3 gap-2 max-w-7xl mx-auto">
-        {loading && <p>Loading...</p>}
-
-        {documentation.map((data, index) => (
-          <div
-            data-aos="fade-up"
-            data-aos-delay={index * 100}
-            key={index}
-            className="mb-2 break-inside-avoid shadow-lg hover:shadow-xl transition duration-300 rounded-lg"
-          >
-            <img
-              src={data.imageUrl}
-              alt={`Gallery ${index + 1}`}
-              className="w-full object-cover transform hover:scale-[102%] transition duration-300 rounded-lg"
-            />
+        {loading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+              key={index}
+              className="mb-2 break-inside-avoid shadow-lg hover:shadow-xl transition duration-300 rounded-lg"
+            >
+              <div className="skeleton h-96 w-full"></div>
+            </div>
+          ))
+        ) : documentation.length === 0 ? (
+          <div className="absolute mx-auto w-full max-w-7xl text-gray-500">
+            Tidak ada dokumentasi yang tersedia.
           </div>
-        ))}
+        ) : (
+          documentation.map((data, index) => (
+            <div
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+              key={index}
+              className="mb-2 break-inside-avoid shadow-lg hover:shadow-xl transition duration-300 rounded-lg"
+            >
+              <img
+                src={data.imageUrl}
+                alt={`Gallery ${index + 1}`}
+                className="w-full object-cover transform hover:scale-[102%] transition duration-300 rounded-lg"
+              />
+            </div>
+          ))
+        )}
       </div>
     </section>
   );

@@ -112,7 +112,7 @@ const AnnouncementFormModal = ({ onSuccess, selectedId }) => {
 
   return (
     <>
-      <dialog id="modal_announcement" className="modal">
+      <dialog id="modal_announcement" className="modal px-4">
         <div className="modal-box w-full max-w-2xl relative">
           {loading ? (
             <div className="flex flex-col h-[80vh] items-center justify-center z-10">

@@ -73,7 +73,7 @@ function Report() {
       </h1>
 
       {/* Reports */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-h-[60vh] overflow-y-scroll">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading &&
           Array.from({ length: 3 }).map((_, index) => (
             <CardSkeletonAnnoun key={index} />
@@ -81,7 +81,7 @@ function Report() {
 
         {!loading && reports.length === 0 && (
           <div className="col-span-full text-center text-gray-500">
-            Belum ada galeri.
+            Belum ada laporan.
           </div>
         )}
       </div>

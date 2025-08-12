@@ -3,7 +3,8 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const apiClient = axios.create({
-  baseURL: BASE_URL,
+  // baseURL: BASE_URL,
+  baseURL: 'http://localhost:3000/slb/v1',
   headers: {
     Authorization: localStorage.getItem("token"),
   },

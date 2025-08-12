@@ -128,7 +128,7 @@ function AdminAnnouncement() {
         {/* Pagination */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 mt-12">
           <h2 className="text-lg font-medium">
-            Semester {semesterList[currentIndex] || "-"}
+            {semesterList[currentIndex] || "-"}
           </h2>
           <p className="text-sm text-gray-500 my-2 text-center">
             Halaman {currentIndex + 1} dari {semesterList.length}
